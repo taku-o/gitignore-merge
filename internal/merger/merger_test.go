@@ -1,7 +1,7 @@
 package merger
 
 import (
-	"gitignore-merge/internal/parser"
+	"github.com/taku-o/gitignore-merge/internal/parser"
 	"reflect"
 	"testing"
 )

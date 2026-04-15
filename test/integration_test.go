@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"gitignore-merge/internal/merger"
-	"gitignore-merge/internal/parser"
+	"github.com/taku-o/gitignore-merge/internal/merger"
+	"github.com/taku-o/gitignore-merge/internal/parser"
 )
 
 func TestIntegration_MergeABC(t *testing.T) {

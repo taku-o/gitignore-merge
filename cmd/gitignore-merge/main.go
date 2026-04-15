@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"gitignore-merge/internal/merger"
-	"gitignore-merge/internal/parser"
+	"github.com/taku-o/gitignore-merge/internal/merger"
+	"github.com/taku-o/gitignore-merge/internal/parser"
 )
 
 func main() {

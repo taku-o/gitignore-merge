@@ -3,7 +3,7 @@ package merger
 import (
 	"strings"
 
-	"gitignore-merge/internal/parser"
+	"github.com/taku-o/gitignore-merge/internal/parser"
 )
 
 // sectionName はセクションのヘッダーからセクション名を抽出する。

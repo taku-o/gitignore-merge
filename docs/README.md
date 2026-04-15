@@ -5,7 +5,7 @@
 ## インストール
 
 ```bash
-go install gitignore-merge/cmd/gitignore-merge@latest
+go install github.com/taku-o/gitignore-merge/cmd/gitignore-merge@latest
 ```
 
 または、ソースからビルド:
