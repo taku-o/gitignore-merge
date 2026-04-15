@@ -1,7 +1,7 @@
 # 実装計画
 
-- [ ] 1. Go プロジェクト基盤のセットアップ
-- [ ] 1.1 Go モジュールとディレクトリ構造を作成する
+- [x] 1. Go プロジェクト基盤のセットアップ
+- [x] 1.1 Go モジュールとディレクトリ構造を作成する
   - `go.mod` を初期化し、モジュール名を設定する
   - `cmd/gitignore-merge/`、`internal/parser/`、`internal/merger/`、`test/testdata/`、`docs/` ディレクトリを作成する
   - `go build ./...` がエラーなく成功する状態にする
