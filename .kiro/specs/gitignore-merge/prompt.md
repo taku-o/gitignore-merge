@@ -32,6 +32,7 @@ think.
 >  現在の仕様（単純な否定パターンのみ）で進めるなら明示的にスコープを限定する
 
 takt --task "/kiro-impl gitignore-merge 1"
+/kiro-impl gitignore-merge 2
 
 
 
