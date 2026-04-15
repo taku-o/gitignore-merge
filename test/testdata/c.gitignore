@@ -1,0 +1,10 @@
+# IDE
+*.swp
+.idea/
+
+# Coverage
+coverage/
+*.coverprofile
+
+# Logs
+!*.log

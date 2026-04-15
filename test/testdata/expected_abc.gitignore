@@ -1,0 +1,21 @@
+# Node
+node_modules/
+dist/
+
+build/
+# Logs
+*.log
+!important.log
+
+!debug.log
+# OS
+.DS_Store
+Thumbs.db
+# IDE
+.vscode/
+.idea/
+*.swp
+# Coverage
+coverage/
+*.coverprofile
+
