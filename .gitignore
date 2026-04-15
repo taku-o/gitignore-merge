@@ -28,6 +28,9 @@ node_modules/
 .env
 .env.local
 
+# Build
+gitignore-merge
+
 # Project Files
 .cursor/hooks/stop_words_rules.json
 .cursor/hooks/stop_words.sh
