@@ -38,6 +38,7 @@ takt --task "/kiro-impl gitignore-merge 1"
 /kiro-impl gitignore-merge 4
 
 /kiro-impl gitignore-merge 5
+/kiro-impl gitignore-merge 6
 
 
 
