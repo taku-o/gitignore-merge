@@ -74,6 +74,7 @@ go install gitignore-merge/cmd/gitignore-merge@latest
 
 Makefileを用意して欲しい。
 
+READMEに英語版、日本語版を用意してください。
 docs/README.md
 docs/README.ja.md
 
