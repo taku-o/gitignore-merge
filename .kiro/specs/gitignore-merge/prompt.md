@@ -72,6 +72,8 @@ go install gitignore-merge/cmd/gitignore-merge@latest
 > coverage/
 > *.coverprofile
 
-Makefile
+Makefileを用意して欲しい。
 
+docs/README.md
+docs/README.ja.md
 
