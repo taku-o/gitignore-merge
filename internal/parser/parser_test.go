@@ -179,7 +179,7 @@ func TestFormat_SectionedFile(t *testing.T) {
 	}
 
 	result := Format(file)
-	expected := "# Node\nnode_modules/\ndist/\n# IDE\n.vscode/\n.idea/\n"
+	expected := "# Node\nnode_modules/\ndist/\n\n# IDE\n.vscode/\n.idea/\n"
 	if result != expected {
 		t.Errorf("Format の結果が期待と異なる:\ngot:\n%s\nwant:\n%s", result, expected)
 	}
@@ -200,7 +200,7 @@ func TestFormat_UnnamedSection(t *testing.T) {
 	}
 
 	result := Format(file)
-	expected := "*.log\ntmp/\n# Node\nnode_modules/\n"
+	expected := "*.log\ntmp/\n\n# Node\nnode_modules/\n"
 	if result != expected {
 		t.Errorf("Format の結果が期待と異なる:\ngot:\n%s\nwant:\n%s", result, expected)
 	}

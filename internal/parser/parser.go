@@ -81,13 +81,22 @@ func ParseFile(path string) (GitignoreFile, error) {
 }
 
 // Format は GitignoreFile をテキスト形式に変換する
+// ヘッダー付きセクションの前に空行を挿入して読みやすくする
 func Format(file GitignoreFile) string {
 	if len(file.Sections) == 0 {
 		return ""
 	}
 
 	var b strings.Builder
-	for _, sec := range file.Sections {
+	for i, sec := range file.Sections {
+		// 2番目以降のヘッダー付きセクションの前に空行を挿入
+		// ただし直前が既に空行の場合は挿入しない
+		if i > 0 && len(sec.Header) > 0 {
+			s := b.String()
+			if len(s) < 2 || s[len(s)-2:] != "\n\n" {
+				b.WriteByte('\n')
+			}
+		}
 		for _, h := range sec.Header {
 			b.WriteString(h)
 			b.WriteByte('\n')

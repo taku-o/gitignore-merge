@@ -44,7 +44,34 @@ takt --task "/kiro-impl gitignore-merge 1"
 go install gitignore-merge/cmd/gitignore-merge@latest
 
 
+モジュール名を github.com/taku-o/gitignore-merge に変更。
+>  リモートリポジトリで公開する場合は、go.mod のモジュール名を github.com/<user>/gitignore-merge のような形式に変更し、README
+>  のインストール手順もそれに合わせる必要があります。
 
 
+#で区切られている箇所があったら、マージ時に #の前の行に空白行を入れたい。
+> gitignore-merge a.gitignore b.gitignore c.gitignore
+> # Node
+> node_modules/
+> dist/
+> 
+> build/
+> # Logs
+> *.log
+> !important.log
+> 
+> !debug.log
+> # OS
+> .DS_Store
+> Thumbs.db
+> # IDE
+> .vscode/
+> .idea/
+> *.swp
+> # Coverage
+> coverage/
+> *.coverprofile
+
+Makefile
 
 
