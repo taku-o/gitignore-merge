@@ -31,5 +31,7 @@ think.
 >  1. 矛盾パターンの定義範囲: path vs !path の単純ケースのみ対応するか、ワイルドカードパターン間の矛盾も扱うか →
 >  現在の仕様（単純な否定パターンのみ）で進めるなら明示的にスコープを限定する
 
-/kiro-impl gitignore-merge
+takt --task "/kiro-impl gitignore-merge 1"
+
+
 
