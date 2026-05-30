@@ -1,14 +1,12 @@
 # Node
 node_modules/
-dist/
-
 build/
+dist/
 
 # Logs
 *.log
-!important.log
-
 !debug.log
+!important.log
 
 # OS
 .DS_Store
