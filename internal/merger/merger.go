@@ -86,32 +86,51 @@ func mergeTwo(base, other parser.GitignoreFile) parser.GitignoreFile {
 
 // mergeSectionPatterns は後続セクションのパターンをベースセクションに統合する。
 // 重複パターンを除去し、矛盾パターンはベース側を優先する。
+// 新規パターンは other 内での前後関係を保持して挿入する。
 func mergeSectionPatterns(base, other parser.Section) parser.Section {
-	// ベースの非空パターンをセットに格納
-	existing := make(map[string]bool)
-	for _, p := range base.Patterns {
+	// ベースのパターンをインデックスマップに格納
+	existingIndex := make(map[string]int)
+	for i, p := range base.Patterns {
 		if p != "" {
-			existing[p] = true
+			existingIndex[p] = i
 		}
 	}
 
-	for _, p := range other.Patterns {
+	for j, p := range other.Patterns {
 		if p == "" {
 			continue
 		}
-
-		// 重複チェック
-		if existing[p] {
+		if _, exists := existingIndex[p]; exists {
+			continue
+		}
+		if isConflict(p, existingIndex) {
 			continue
 		}
 
-		// 矛盾チェック: X と !X の関係
-		if isConflict(p, existing) {
-			continue
+		// other 内で直前に存在するパターンのベース内位置を探して挿入位置を決定
+		insertPos := len(base.Patterns)
+		for k := j - 1; k >= 0; k-- {
+			prev := other.Patterns[k]
+			if prev == "" {
+				continue
+			}
+			if idx, found := existingIndex[prev]; found {
+				insertPos = idx + 1
+				break
+			}
 		}
 
-		base.Patterns = append(base.Patterns, p)
-		existing[p] = true
+		base.Patterns = append(base.Patterns, "")
+		copy(base.Patterns[insertPos+1:], base.Patterns[insertPos:])
+		base.Patterns[insertPos] = p
+
+		// 挿入位置以降のインデックスをずらす
+		for k, v := range existingIndex {
+			if v >= insertPos {
+				existingIndex[k] = v + 1
+			}
+		}
+		existingIndex[p] = insertPos
 	}
 
 	return base
@@ -119,13 +138,13 @@ func mergeSectionPatterns(base, other parser.Section) parser.Section {
 
 // isConflict はパターンがベースの既存パターンと矛盾するか判定する。
 // パターン X に対して !X が存在するか、!X に対して X が存在する場合に矛盾と見なす。
-func isConflict(pattern string, existing map[string]bool) bool {
+func isConflict(pattern string, existing map[string]int) bool {
 	if strings.HasPrefix(pattern, "!") {
 		// 後続が !X → ベースに X があれば矛盾
-		positive := pattern[1:]
-		return existing[positive]
+		_, found := existing[pattern[1:]]
+		return found
 	}
 	// 後続が X → ベースに !X があれば矛盾
-	negated := "!" + pattern
-	return existing[negated]
+	_, found := existing["!"+pattern]
+	return found
 }

@@ -150,7 +150,8 @@ func TestMerge_DuplicatePatternRemoval(t *testing.T) {
 
 	result := Merge([]parser.GitignoreFile{base, other})
 
-	wantPatterns := []string{"node_modules/", "dist/", "build/"}
+	// build/ は other 内で node_modules/ の直後にあるため、base の node_modules/ の直後（dist/ の前）に挿入される
+	wantPatterns := []string{"node_modules/", "build/", "dist/"}
 	if !reflect.DeepEqual(result.Sections[0].Patterns, wantPatterns) {
 		t.Errorf("重複パターンは除去されるべき: got %v, want %v", result.Sections[0].Patterns, wantPatterns)
 	}
@@ -320,6 +321,61 @@ func TestMerge_UnnamedSections(t *testing.T) {
 	wantPatterns := []string{"*.log", "tmp/"}
 	if !reflect.DeepEqual(result.Sections[0].Patterns, wantPatterns) {
 		t.Errorf("無名セクションのパターンが期待と異なる: got %v, want %v", result.Sections[0].Patterns, wantPatterns)
+	}
+}
+
+func TestMerge_NewPatternInsertedInOrder(t *testing.T) {
+	// ベースに A, C があり other に A, B_new, C がある場合、
+	// B_new は A と C の間（前後関係を保持）に挿入されるべき
+	base := parser.GitignoreFile{
+		Sections: []parser.Section{
+			{
+				Header:   []string{"# Project Files"},
+				Patterns: []string{".claude/commands/simplify-loop.md", "CLAUDE.local.md"},
+			},
+		},
+	}
+	other := parser.GitignoreFile{
+		Sections: []parser.Section{
+			{
+				Header:   []string{"# Project Files"},
+				Patterns: []string{".claude/commands/simplify-loop.md", ".claude/skills/jj-new/", "CLAUDE.local.md"},
+			},
+		},
+	}
+
+	result := Merge([]parser.GitignoreFile{base, other})
+
+	wantPatterns := []string{".claude/commands/simplify-loop.md", ".claude/skills/jj-new/", "CLAUDE.local.md"}
+	if !reflect.DeepEqual(result.Sections[0].Patterns, wantPatterns) {
+		t.Errorf("新規パターンは前後関係を保持して挿入されるべき: got %v, want %v", result.Sections[0].Patterns, wantPatterns)
+	}
+}
+
+func TestMerge_MultipleNewPatternsInsertedInOrder(t *testing.T) {
+	// 複数の新規パターンが散在する場合もそれぞれ正しい位置に挿入される
+	base := parser.GitignoreFile{
+		Sections: []parser.Section{
+			{
+				Header:   []string{"# Files"},
+				Patterns: []string{"a", "c", "e"},
+			},
+		},
+	}
+	other := parser.GitignoreFile{
+		Sections: []parser.Section{
+			{
+				Header:   []string{"# Files"},
+				Patterns: []string{"a", "b_new", "c", "d_new", "e"},
+			},
+		},
+	}
+
+	result := Merge([]parser.GitignoreFile{base, other})
+
+	wantPatterns := []string{"a", "b_new", "c", "d_new", "e"}
+	if !reflect.DeepEqual(result.Sections[0].Patterns, wantPatterns) {
+		t.Errorf("複数の新規パターンが正しい位置に挿入されるべき: got %v, want %v", result.Sections[0].Patterns, wantPatterns)
 	}
 }
 
