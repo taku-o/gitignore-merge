@@ -31,6 +31,25 @@ node_modules/
 # Build
 gitignore-merge
 
+# cc-sdd
+.claude/skills/kiro-debug/
+.claude/skills/kiro-discovery/
+.claude/skills/kiro-impl/
+.claude/skills/kiro-review/
+.claude/skills/kiro-spec-batch/
+.claude/skills/kiro-spec-design/
+.claude/skills/kiro-spec-init/
+.claude/skills/kiro-spec-quick/
+.claude/skills/kiro-spec-requirements/
+.claude/skills/kiro-spec-status/
+.claude/skills/kiro-spec-tasks/
+.claude/skills/kiro-steering-custom/
+.claude/skills/kiro-steering/
+.claude/skills/kiro-validate-design/
+.claude/skills/kiro-validate-gap/
+.claude/skills/kiro-validate-impl/
+.claude/skills/kiro-verify-completion/
+
 # Project Files
 .cursor/hooks/stop_words_rules.json
 .cursor/hooks/stop_words.sh
