@@ -71,6 +71,7 @@ gitignore-merge
 .claude/commands/kiro-complete-tasks.md
 .claude/commands/kiro-review-impl.md
 .claude/commands/simplify-loop.md
+.claude/skills/prevent-cc-sdd-auto-progress/
 .claude/commands/kiro-approve-req.md
 .claude/commands/after-merged.md
 .claude/commands/kiro-review-spec.md
